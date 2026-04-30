@@ -6,11 +6,11 @@ class Tree {
   }
 
   buildTree(array) {
-  // takes an array of numbers and turns it into a balanced binary tree
-  // return level-0 root node
-  const sortedArray = mergeSort(array);
-  console.log(mergeSort(array));
-  return this.sortedArrayToBSTRecur(sortedArray, 0, sortedArray.length - 1);
+    // takes an array of numbers and turns it into a balanced binary tree
+    // return level-0 root node
+    const sortedArray = mergeSort(array);
+    console.log(mergeSort(array));
+    return this.sortedArrayToBSTRecur(sortedArray, 0, sortedArray.length - 1);
   }
 
   sortedArrayToBSTRecur(arr, start, end) {
@@ -27,25 +27,46 @@ class Tree {
   }
 
   includes(value) {
-  // accepts a value and returns true if the given value is in the tree. Else false
+    // accepts a value and returns true if the given value is in the tree. Else false
+    let queue = [];
+    let tmpPointer = this.root;
+    queue.push(tmpPointer);
+    while (queue.length !== 0) {
+      const element = queue.shift();
+      if (element.data === value) {
+        return true;
+      }
+      if (element.left !== null) {
+        queue.push(element.left);
+      }
+      if (element.right !== null) {
+        queue.push(element.right);
+      }
+    }
+    return false;
   }
 
   insert(value) {
-  // accepts a value and inserts a new node with that value into the tree
-  // if the function is called with a value that already exists in the tree, the function should do nothing
-    // So I need to call function includes(value) first to check for the value and only then continue
+    // accepts a value and inserts a new node with that value into the tree
+    // if the function is called with a value that already exists in the tree, the function should do nothing
+    if (this.includes(value)) {
+      return;
+    }
+    
   }
 
   deleteItem(value) {
-  // accepts a value and removes it from the tree
-  // if the given value doesn't exist in the tree, the function should do nothing
-    // So I need to call function includes(value) first to check for the value and only then continue
+    // accepts a value and removes it from the tree
+    // if the given value doesn't exist in the tree, the function should do nothing
+    if (!this.includes(value)) {
+      return;
+    }
   }
 
   levelOrderForEach(callback) {
-  // accepts a callback function as its parameter. levelOrderForEach() should traverse the tree in breadth-first level order and call the callback on each value
-  // as it traverses, passing each value (not the nodes) as an argument
-  // If no callback function is provided, throw an Error reporting that a callback is required
+    // accepts a callback function as its parameter. levelOrderForEach() should traverse the tree in breadth-first level order and call the callback on each value
+    // as it traverses, passing each value (not the nodes) as an argument
+    // If no callback function is provided, throw an Error reporting that a callback is required
   }
 
   inOrderForEach(callback) {
@@ -61,26 +82,26 @@ class Tree {
   }
 
   height(value) {
-  // returns the height of the node containing the given value
-  // Height is defined as the number of edges in the longest path from that node to a leaf node
-  // If the value is not found in the tree, the function should return undefined.
+    // returns the height of the node containing the given value
+    // Height is defined as the number of edges in the longest path from that node to a leaf node
+    // If the value is not found in the tree, the function should return undefined.
   }
 
   depth(value) {
-  // returns the depth of the node containing the given value
-  // Depth is defined as the number of edges in the path from that node to the root node
-  // If the value is not found in the tree, the function should return undefined.
+    // returns the depth of the node containing the given value
+    // Depth is defined as the number of edges in the path from that node to the root node
+    // If the value is not found in the tree, the function should return undefined.
   }
 
   isBalanced() {
-  // checks if the tree is balanced
-  // A binary tree is considered balanced if, for every node in the tree, 
-  // the height difference between its left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
+    // checks if the tree is balanced
+    // A binary tree is considered balanced if, for every node in the tree, 
+      // the height difference between its left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
   }
 
   rebalance() {
-  // rebalances an unbalanced tree
-  // You’ll want to use a traversal method to provide a new array to the buildTree() function.
+    // rebalances an unbalanced tree
+    // You’ll want to use a traversal method to provide a new array to the buildTree() function.
   }
 }
 
@@ -95,3 +116,5 @@ class Node {
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 console.log(prettyPrint(test.root));
+console.log(test.includes(8));
+console.log(test.includes(10));
