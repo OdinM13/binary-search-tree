@@ -1,11 +1,14 @@
+import { mergeSort, prettyPrint } from './utils.mjs';
+
 class Tree {
   constructor(array) {
-    this.root = buildTree(array);
+    this.root = this.buildTree(array);
   }
 
   buildTree(array) {
   // takes an array of numbers and turns it into a balanced binary tree
   // return level-0 root node
+  console.log(mergeSort(array));
   }
 
   includes(value) {
@@ -81,3 +84,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
   prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
 }
+
+const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
