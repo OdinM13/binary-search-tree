@@ -8,7 +8,22 @@ class Tree {
   buildTree(array) {
   // takes an array of numbers and turns it into a balanced binary tree
   // return level-0 root node
+  const sortedArray = mergeSort(array);
   console.log(mergeSort(array));
+  return this.sortedArrayToBSTRecur(sortedArray, 0, sortedArray.length - 1);
+  }
+
+  sortedArrayToBSTRecur(arr, start, end) {
+    if (start > end) return null;
+
+    let mid = start + Math.floor((end - start) / 2);
+    let root = new Node(arr[mid]);
+
+    // Divide from middle element
+    root.left = this.sortedArrayToBSTRecur(arr, start, mid - 1);
+    root.right = this.sortedArrayToBSTRecur(arr, mid + 1, end);
+
+    return root;
   }
 
   includes(value) {
@@ -18,11 +33,13 @@ class Tree {
   insert(value) {
   // accepts a value and inserts a new node with that value into the tree
   // if the function is called with a value that already exists in the tree, the function should do nothing
+    // So I need to call function includes(value) first to check for the value and only then continue
   }
 
   deleteItem(value) {
   // accepts a value and removes it from the tree
   // if the given value doesn't exist in the tree, the function should do nothing
+    // So I need to call function includes(value) first to check for the value and only then continue
   }
 
   levelOrderForEach(callback) {
@@ -75,14 +92,6 @@ class Node {
   }
 }
 
-const prettyPrint = (node, prefix = '', isLeft = true) => {
-  if (node === null || node === undefined) {
-    return;
-  }
-
-  prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-  prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-}
-
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+
+console.log(prettyPrint(test.root));

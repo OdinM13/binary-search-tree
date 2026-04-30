@@ -5,14 +5,21 @@ export const mergeSort = (array) => {
     let i = 0;
     let j = 0;
     let arrayC = [];
-    while ( i < lengthA && j < lengthB) {
+    while (i < lengthA && j < lengthB) {
       if (arrayA[i] < arrayB[j]) {
         const valueA = arrayA[i];
         arrayC.push(valueA);
         i++;
-      } else {
+      } else if (arrayA[i] > arrayB[j]) {
         const valueB = arrayB[j];
         arrayC.push(valueB);
+        j++;
+      } 
+      else {
+        // if value A = value B, remove duplicate and add only one
+        const valueA = arrayA[i];
+        arrayC.push(valueA);
+        i++;
         j++;
       }
     }
@@ -34,7 +41,7 @@ export const mergeSort = (array) => {
       const arrayRight = array.slice(indexMid, array.length);
       const sortedArrayLeft = recursiveSort(arrayLeft);
       const sortedArrayRight = recursiveSort(arrayRight);
-      const mergedArray = mergeArray(sortedArrayLeft, sortedArrayRight, arrayLeft.length, arrayRight.length); 
+      const mergedArray = mergeArray(sortedArrayLeft, sortedArrayRight, sortedArrayLeft.length, sortedArrayRight.length); 
       return mergedArray;
     }
   }
