@@ -78,6 +78,32 @@ class Tree {
     if (!this.includes(value)) {
       return;
     }
+    // If left and right = null you can just delete the node
+    // If on left or right is present just connect previous with next
+    // If left and right is present. Find the next biggest value an replace it with it. Rcursively remove everything after and attach again 
+
+    let tmpPointer = this.root;
+    let tmpPointerPrev = null;
+    while (true) {
+      if (value < tmpPointer.data) {
+        tmpPointerPrev = tmpPointer;
+        tmpPointer = tmpPointer.left;
+        console.log(tmpPointer);
+      } else if (value > tmpPointer.data) {
+        tmpPointerPrev = tmpPointer;
+        tmpPointer = tmpPointer.right;
+        console.log(tmpPointer);
+      } else {
+        if (tmpPointer === tmpPointerPrev.left) {
+          tmpPointerPrev.left = null;
+          return;
+        }
+        if (tmpPointer === tmpPointerPrev.right) {
+          tmpPointerPrev.right = null;
+          return;
+        }
+      }
+    }
   }
 
   levelOrderForEach(callback) {
@@ -267,3 +293,6 @@ console.log('Height of tree at 10: ', test.height(10));
 
 console.log('Depth of tree at 11: ', test.depth(11));
 console.log('Depth of tree at 10: ', test.depth(10));
+
+console.log('Delete Item 3: ', test.deleteItem(3));
+console.log(prettyPrint(test.root));
