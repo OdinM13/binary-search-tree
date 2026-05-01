@@ -149,7 +149,6 @@ class Tree {
       }
       level++;
     }
-
     return height = level - depth - 1;
   }
 
@@ -186,14 +185,33 @@ class Tree {
       }
       level++;
     }
-
     return depth;
   }
 
   isBalanced() {
     // checks if the tree is balanced
     // A binary tree is considered balanced if, for every node in the tree, 
-      // the height difference between its left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
+    // the height difference between its left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
+    return this.checkNode(this.root);
+  }
+
+  checkNode(node) {
+    if (node === null) {
+      return true;
+    }
+    const lHeight = this.nodeHeight(node.left);
+    const rHeight = this.nodeHeight(node.right);
+    
+    if (Math.abs(lHeight - rHeight) > 1) {
+      return false;
+    }
+
+    return this.checkNode(node.left) && this.checkNode(node.right);
+  }
+
+  nodeHeight(node) {
+    if (node === null) return 0;
+    return 1 + Math.max(this.nodeHeight(node.left), this.nodeHeight(node.right));
   }
 
   rebalance() {
@@ -238,8 +256,12 @@ console.log('Depth for value 10: ', test.depth(10));
 console.log(test.insert(11));
 console.log(test.insert(11));
 console.log(prettyPrint(test.root));
+console.log('Is tree balanced? ', test.isBalanced());
+
 console.log('Rebalanced tree: ', test.rebalance());
 console.log(prettyPrint(test.root));
+console.log('Is tree balanced? ', test.isBalanced());
+
 console.log('Height of tree at 11: ', test.height(11));
 console.log('Height of tree at 10: ', test.height(10));
 
