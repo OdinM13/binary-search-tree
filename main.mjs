@@ -52,7 +52,24 @@ class Tree {
     if (this.includes(value)) {
       return;
     }
-    
+    let tmpPointer = this.root;
+    while (true) {
+      if (value < tmpPointer.data) {
+        if (tmpPointer.left === null) {
+          const newNode = new Node(value);
+          tmpPointer.left = newNode;
+          return;
+        }
+        tmpPointer = tmpPointer.left;
+      } else if (value > tmpPointer.data) {
+        if (tmpPointer.right === null) {
+          const newNode = new Node(value);
+          tmpPointer.right = newNode;
+          return;
+        }
+        tmpPointer = tmpPointer.right;
+      }
+    }
   }
 
   deleteItem(value) {
@@ -85,12 +102,18 @@ class Tree {
     // returns the height of the node containing the given value
     // Height is defined as the number of edges in the longest path from that node to a leaf node
     // If the value is not found in the tree, the function should return undefined.
+    if (!this.includes(value)) {
+      return undefined;
+    }
   }
 
   depth(value) {
     // returns the depth of the node containing the given value
     // Depth is defined as the number of edges in the path from that node to the root node
     // If the value is not found in the tree, the function should return undefined.
+    if (!this.includes(value)) {
+      return undefined;
+    }
   }
 
   isBalanced() {
@@ -116,5 +139,10 @@ class Node {
 const test = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 console.log(prettyPrint(test.root));
-console.log(test.includes(8));
-console.log(test.includes(10));
+console.log('Tree includes 8: ', test.includes(8));
+console.log('Tree includes 10: ', test.includes(10));
+console.log(test.insert(10));
+console.log('Tree includes 10: ', test.includes(10));
+console.log(test.insert(11));
+console.log(test.insert(11));
+console.log(prettyPrint(test.root));
