@@ -125,6 +125,23 @@ class Tree {
   rebalance() {
     // rebalances an unbalanced tree
     // You’ll want to use a traversal method to provide a new array to the buildTree() function.
+    let queue = [];
+    let newTree = [];
+    let tmpPointer = this.root;
+    queue.push(tmpPointer);
+    newTree.push(tmpPointer.data);
+    while (queue.length !== 0) {
+      const element = queue.shift();
+      if (element.left !== null) {
+        queue.push(element.left);
+        newTree.push(element.left.data);
+      }
+      if (element.right !== null) {
+        queue.push(element.right);
+        newTree.push(element.right.data);
+      }
+    }
+    this.root = this.buildTree(newTree);
   }
 }
 
@@ -145,4 +162,6 @@ console.log(test.insert(10));
 console.log('Tree includes 10: ', test.includes(10));
 console.log(test.insert(11));
 console.log(test.insert(11));
+console.log(prettyPrint(test.root));
+console.log('Rebalanced tree: ', test.rebalance());
 console.log(prettyPrint(test.root));
