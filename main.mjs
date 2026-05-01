@@ -91,7 +91,24 @@ class Tree {
   } 
 
   preOrderForEach(callback) {
-
+    // STILL OPEN.
+    let queue = [];
+    let tmpPointer = this.root;
+    let counter = 0;
+    queue.push(tmpPointer);
+    while (queue.length !== 0) {
+      const element = queue.shift();
+      if (element.data === value) {
+        return counter;
+      }
+      if (element.right !== null) {
+        queue.unshift(element.right);
+      }
+      if (element.left !== null) {
+        queue.unshift(element.left);
+      }
+      counter++;
+    }
   }
 
   postOrderForEach(callback) {
@@ -105,6 +122,35 @@ class Tree {
     if (!this.includes(value)) {
       return undefined;
     }
+    let queue = [];
+    let tmpPointer = this.root;
+    let level = 0;
+    let height = -1;
+    let depth = -1;
+    queue.push(tmpPointer);
+
+    while (queue.length !== 0) {
+      let n = queue.length;
+      for (let i = 0; i < n; i++) {
+        const element = queue.shift();
+        if (element.data === value) {
+          depth = level;
+          queue = [];
+        }
+        if (element.left !== null) {
+          queue.push(element.left);
+        }
+        if (element.right !== null) {
+          queue.push(element.right);
+        }
+        if (element.data === value) {
+          break;
+        }
+      }
+      level++;
+    }
+
+    return height = level - depth - 1;
   }
 
   depth(value) {
@@ -114,6 +160,34 @@ class Tree {
     if (!this.includes(value)) {
       return undefined;
     }
+    let queue = [];
+    let tmpPointer = this.root;
+    let level = 0;
+    let depth = -1;
+    queue.push(tmpPointer);
+
+    while (queue.length !== 0) {
+      let n = queue.length;
+      for (let i = 0; i < n; i++) {
+        const element = queue.shift();
+        if (element.data === value) {
+          depth = level;
+          queue = [];
+        }
+        if (element.left !== null) {
+          queue.push(element.left);
+        }
+        if (element.right !== null) {
+          queue.push(element.right);
+        }
+        if (element.data === value) {
+          break;
+        }
+      }
+      level++;
+    }
+
+    return depth;
   }
 
   isBalanced() {
@@ -160,8 +234,14 @@ console.log('Tree includes 8: ', test.includes(8));
 console.log('Tree includes 10: ', test.includes(10));
 console.log(test.insert(10));
 console.log('Tree includes 10: ', test.includes(10));
+console.log('Depth for value 10: ', test.depth(10));
 console.log(test.insert(11));
 console.log(test.insert(11));
 console.log(prettyPrint(test.root));
 console.log('Rebalanced tree: ', test.rebalance());
 console.log(prettyPrint(test.root));
+console.log('Height of tree at 11: ', test.height(11));
+console.log('Height of tree at 10: ', test.height(10));
+
+console.log('Depth of tree at 11: ', test.depth(11));
+console.log('Depth of tree at 10: ', test.depth(10));
