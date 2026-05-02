@@ -78,32 +78,43 @@ class Tree {
     if (!this.includes(value)) {
       return;
     }
-    // If left and right = null you can just delete the node
-    // If on left or right is present just connect previous with next
-    // If left and right is present. Find the next biggest value an replace it with it. Rcursively remove everything after and attach again 
+    this.root = this.delete(this.root, value);
+  }
 
-    let tmpPointer = this.root;
-    let tmpPointerPrev = null;
-    while (true) {
-      if (value < tmpPointer.data) {
-        tmpPointerPrev = tmpPointer;
-        tmpPointer = tmpPointer.left;
-        console.log(tmpPointer);
-      } else if (value > tmpPointer.data) {
-        tmpPointerPrev = tmpPointer;
-        tmpPointer = tmpPointer.right;
-        console.log(tmpPointer);
-      } else {
-        if (tmpPointer === tmpPointerPrev.left) {
-          tmpPointerPrev.left = null;
-          return;
-        }
-        if (tmpPointer === tmpPointerPrev.right) {
-          tmpPointerPrev.right = null;
-          return;
-        }
+  delete(node, value) {
+    if (node === null) { // Breaking condition
+      return null;
+    }
+    if (value < node.data) {
+      node.left = this.delete(node.left, value);
+    }
+    if (value > node.data) {
+      node.right = this.delete(node.right, value);
+    }
+    if (value === node.data) {
+      if (node.left === null && node.right !== null) {
+        return node.right;
+      }
+      if (node.left !== null && node.right === null) {
+        return node.left;
+      }
+      if (node.left === null && node.right === null) {
+        return null;
+      }
+      if (node.left !== null && node.right !== null) {
+        node.data = this.findMin(node);
+        node.right = this.delete(node.right, node.data);
       }
     }
+    return node;
+  }
+
+  findMin(node) {
+    let stepRight = node.right;
+    while (stepRight.left !== null) {
+      stepRight = stepRight.left;
+    }   
+    return stepRight.data;
   }
 
   levelOrderForEach(callback) {
@@ -294,5 +305,7 @@ console.log('Height of tree at 10: ', test.height(10));
 console.log('Depth of tree at 11: ', test.depth(11));
 console.log('Depth of tree at 10: ', test.depth(10));
 
-console.log('Delete Item 3: ', test.deleteItem(3));
+// console.log('Delete Item 3: ', test.deleteItem(3));
+console.log('Delete Item 4: ', test.deleteItem(4));
+// console.log('Delete Item 1: ', test.deleteItem(1));
 console.log(prettyPrint(test.root));
