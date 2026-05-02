@@ -121,6 +121,22 @@ class Tree {
     // accepts a callback function as its parameter. levelOrderForEach() should traverse the tree in breadth-first level order and call the callback on each value
     // as it traverses, passing each value (not the nodes) as an argument
     // If no callback function is provided, throw an Error reporting that a callback is required
+    if (typeof callback !== 'function') {
+      throw new Error("Provide a callback function!");
+    }
+    let queue = [];
+    let tmpPointer = this.root;
+    queue.push(tmpPointer);
+    while (queue.length !== 0) {
+      const element = queue.shift();
+      callback(element.data); 
+      if (element.left !== null) {
+        queue.push(element.left);
+      }
+      if (element.right !== null) {
+        queue.push(element.right);
+      }
+    }
   }
 
   inOrderForEach(callback) {
