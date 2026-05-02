@@ -140,14 +140,22 @@ class Tree {
   }
 
   inOrderForEach(callback) {
-    // STILL OPEN
     if (typeof callback !== 'function') {
       throw new Error("Provide a callback function!");
     }
+    this.inOrder(this.root, callback);
   } 
 
+  inOrder(node, callback) {
+    if (node === null) {
+      return;
+    }
+    this.inOrder(node.left, callback);
+    callback(node.data);
+    this.inOrder(node.right, callback);
+  }
+
   preOrderForEach(callback) {
-    // STILL OPEN.
     if (typeof callback !== 'function') {
       throw new Error("Provide a callback function!");
     }
@@ -155,13 +163,13 @@ class Tree {
     let tmpPointer = this.root;
     queue.push(tmpPointer);
     while (queue.length !== 0) {
-      const element = queue.shift();
+      const element = queue.pop();
       callback(element.data); 
       if (element.right !== null) {
-        queue.unshift(element.right);
+        queue.push(element.right);
       }
       if (element.left !== null) {
-        queue.unshift(element.left);
+        queue.push(element.left);
       }
     }
   }
