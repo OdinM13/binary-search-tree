@@ -175,10 +175,19 @@ class Tree {
   }
 
   postOrderForEach(callback) {
-    // STILL OPEN
     if (typeof callback !== 'function') {
       throw new Error("Provide a callback function!");
     }
+    this.postOrder(this.root, callback);
+  }
+
+  postOrder(node, callback) {
+    if (node === null) {
+      return;
+    }
+    this.postOrder(node.left, callback);
+    this.postOrder(node.right, callback);
+    callback(node.data);
   }
 
   height(value) {
