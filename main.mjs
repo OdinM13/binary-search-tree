@@ -140,32 +140,37 @@ class Tree {
   }
 
   inOrderForEach(callback) {
-
+    // STILL OPEN
+    if (typeof callback !== 'function') {
+      throw new Error("Provide a callback function!");
+    }
   } 
 
   preOrderForEach(callback) {
     // STILL OPEN.
+    if (typeof callback !== 'function') {
+      throw new Error("Provide a callback function!");
+    }
     let queue = [];
     let tmpPointer = this.root;
-    let counter = 0;
     queue.push(tmpPointer);
     while (queue.length !== 0) {
       const element = queue.shift();
-      if (element.data === value) {
-        return counter;
-      }
+      callback(element.data); 
       if (element.right !== null) {
         queue.unshift(element.right);
       }
       if (element.left !== null) {
         queue.unshift(element.left);
       }
-      counter++;
     }
   }
 
   postOrderForEach(callback) {
-
+    // STILL OPEN
+    if (typeof callback !== 'function') {
+      throw new Error("Provide a callback function!");
+    }
   }
 
   height(value) {
